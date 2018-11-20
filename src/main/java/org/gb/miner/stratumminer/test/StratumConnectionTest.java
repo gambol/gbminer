@@ -6,17 +6,16 @@ import org.gb.miner.stratumminer.connection.StratumMiningConnection;
  * Created by Ben David on 01/08/2017.
  */
 
-public class StratumConnectionTest
-{
+public class StratumConnectionTest {
     private static final String DEFAULT_URL = "stratum+tcp://xxxx";
     private static final String DEFAULT_USER = "user";
     private static final String DEFAULT_PASS = "pass";
-    public static void main(String[] args)
-    {
+
+    public static void main(String[] args) {
         try {
-            StratumMiningConnection smc=new StratumMiningConnection(DEFAULT_URL,DEFAULT_USER,DEFAULT_PASS);
+            StratumMiningConnection smc = new StratumMiningConnection(DEFAULT_URL, DEFAULT_USER, DEFAULT_PASS);
             smc.connect();
-            for(;;){
+            for (; ; ) {
                 Thread.sleep(1000);
             }
         } catch (Exception e) {

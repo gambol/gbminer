@@ -3,7 +3,6 @@ package org.gb.miner.stratumminer.connection;
 import lombok.extern.slf4j.Slf4j;
 import org.gb.miner.stratumminer.MiningWork;
 import org.gb.miner.stratumminer.MinyaException;
-import org.gb.miner.stratumminer.MinyaLog;
 import org.gb.miner.stratumminer.StratumMiningWork;
 import org.gb.miner.stratumminer.stratum.*;
 import org.gb.miner.stratumminer.worker.IMiningWorker;
@@ -12,7 +11,8 @@ import java.io.IOException;
 import java.net.*;
 import java.util.ArrayList;
 import java.util.Observable;
-import java.util.concurrent.*;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
 
 import static org.gb.miner.stratumminer.Constants.CLIENT_NAME_STRING;
 
@@ -236,7 +236,6 @@ public class StratumMiningConnection extends Observable implements IMiningConnec
             {
                 for (i = 0; i < 3; i++) {
                     log.info("Request Stratum subscribe...");
-                    log.info("StratumMiningConnection", "Request Stratum subscribe");
                     subscribe = (StratumJsonResultSubscribe) this._rx_thread.waitForJsonResult(this._sock.subscribe(CLIENT_NAME), StratumJsonResultSubscribe.class, 3000);
                     if (subscribe == null || subscribe.error != null) {
                         log.warn("StratumMiningConnection Stratum subscribe error.");
@@ -252,7 +251,6 @@ public class StratumMiningConnection extends Observable implements IMiningConnec
             //Authorize and make  a 1st work.
             for (i = 0; i < 3; i++) {
                 log.info("Request Stratum authorize...");
-                log.info("StratumMiningConnection", "Request Stratum authorize...");
                 StratumJsonResultStandard auth = (StratumJsonResultStandard) this._rx_thread.waitForJsonResult(this._sock.authorize(this._uid, this._pass), StratumJsonResultStandard.class, 3000);
                 if (auth == null || auth.error != null) {
                     log.warn("StratumMiningConnection Stratum authorize error.");
@@ -357,7 +355,6 @@ public class StratumMiningConnection extends Observable implements IMiningConnec
         //notifyを更新
         try {
             log.info("Receive new job:" + i_notify.job_id);
-            log.info("StratumMiningConnection", "Receive new job:" + i_notify.job_id);
             setChanged();
             notifyObservers(IMiningWorker.Notification.NEW_WORK);
             this._work_builder.setNotify(i_notify);
@@ -377,7 +374,6 @@ public class StratumMiningConnection extends Observable implements IMiningConnec
 
     private void cbNewMiningDifficulty(StratumJsonMethodSetDifficulty i_difficulty) {
         log.info("Receive set difficulty:" + i_difficulty.difficulty);
-        log.info("StratumMiningConnection", "Receive set difficulty:" + i_difficulty.difficulty);
         synchronized (this._data_lock) {
             if (this._work_builder == null) {
                 this._last_difficulty = i_difficulty;
@@ -421,8 +417,7 @@ public class StratumMiningConnection extends Observable implements IMiningConnec
             long id = this._sock.submit(i_nonce, this._uid, w.job_id, w.xnonce2, ntime);
             SubmitOrder so = new SubmitOrder(id, w, i_nonce);
             this._rx_thread.addSubmitOrder(so);
-            log.info("Found! " + so.nonce + " Request submit(" + w.job_id + ")");
-            log.info("StratumMiningConnection", "Found! " + so.nonce + " Request submit(" + w.job_id + ")");
+            log.info("submit. Found! nonce:{}. job_id:{}" , so.nonce , w.job_id);
         } catch (IOException e) {
             throw new MinyaException(e);
         }

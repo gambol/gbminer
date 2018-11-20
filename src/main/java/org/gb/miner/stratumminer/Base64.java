@@ -4,11 +4,10 @@ package org.gb.miner.stratumminer;
  * Created by Ben David on 01/08/2017.
  */
 
-public class Base64
-{
+public class Base64 {
     private final static char[] BASE64_ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/".toCharArray();
-    public final static String encode(String str)
-    {
+
+    public final static String encode(String str) {
         byte[] buf = str.getBytes();
         int size = buf.length;
         char[] ar = new char[((size + 2) / 3) * 4];

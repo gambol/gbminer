@@ -1,8 +1,8 @@
 package org.gb.miner.stratumminer.stratum;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import org.gb.miner.stratumminer.HexArray;
 import org.gb.miner.stratumminer.MinyaException;
-import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -56,8 +56,8 @@ public class StratumJsonMethodMiningNotify extends StratumJsonMethod {
             if (!merkle_arr.isArray()) {
                 throw new MinyaException();
             }
-            ArrayList<HexArray> l=new ArrayList<HexArray>();
-            for (Iterator<JsonNode> i = merkle_arr.iterator(); i.hasNext();) {
+            ArrayList<HexArray> l = new ArrayList<HexArray>();
+            for (Iterator<JsonNode> i = merkle_arr.iterator(); i.hasNext(); ) {
                 l.add(toHexArray(i.next().asText(), 64));
             }
             this.merkle_arr = l.toArray(new HexArray[l.size()]);
@@ -79,16 +79,16 @@ public class StratumJsonMethodMiningNotify extends StratumJsonMethod {
             this.clean = params.get(8).asBoolean();
         }
     }
-    public HexArray getXnonce2(StratumJsonResultSubscribe i_subscribe)
-    {
+
+    public HexArray getXnonce2(StratumJsonResultSubscribe i_subscribe) {
         //xnonce2
-        HexArray xnonce2=new HexArray(new byte[i_subscribe.xnonce2_size]);
+        HexArray xnonce2 = new HexArray(new byte[i_subscribe.xnonce2_size]);
         return xnonce2;
     }
-    public HexArray getCoinbase(StratumJsonResultSubscribe i_subscribe)
-    {
+
+    public HexArray getCoinbase(StratumJsonResultSubscribe i_subscribe) {
         //coinbase
-        HexArray coinbase=new HexArray(this.coinb1);
+        HexArray coinbase = new HexArray(this.coinb1);
         coinbase.append(i_subscribe.xnonce1);
         coinbase.append(this.getXnonce2(i_subscribe));
         coinbase.append(this.coinb2);

@@ -7,19 +7,17 @@ import org.gb.miner.stratumminer.connection.TestStratumMiningConnection;
  * Created by Ben David on 01/08/2017.
  */
 
-public class SubmitFormatTest
-{
+public class SubmitFormatTest {
     //private static final String DEFAULT_URL = "stratum+tcp://xxxx";
     //private static final String DEFAULT_USER = "user";
     //private static final String DEFAULT_PASS = "pass";
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         try {
-            TestStratumMiningConnection smc=new TestStratumMiningConnection(1);
+            TestStratumMiningConnection smc = new TestStratumMiningConnection(1);
             smc.connect();
-            MiningWork mw=smc.getWork();
-            smc.submitWork(mw,0x12345678);
-            for(;;){
+            MiningWork mw = smc.getWork();
+            smc.submitWork(mw, 0x12345678);
+            for (; ; ) {
                 Thread.sleep(1000);
             }
         } catch (Exception e) {

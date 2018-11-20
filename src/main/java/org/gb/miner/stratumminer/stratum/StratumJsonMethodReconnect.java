@@ -1,14 +1,13 @@
 package org.gb.miner.stratumminer.stratum;
 
-import org.gb.miner.stratumminer.MinyaException;
 import com.fasterxml.jackson.databind.JsonNode;
+import org.gb.miner.stratumminer.MinyaException;
 
 /**
  * Created by Ben David on 01/08/2017.
  */
 
-public class StratumJsonMethodReconnect extends StratumJsonMethod
-{
+public class StratumJsonMethodReconnect extends StratumJsonMethod {
     //{"method":"client.reconnect",params:["host",1]}
     public final static String TEST_PATT = "{\"params\": [\"host\",80], \"jsonrpc\": \"2.0\", \"method\": \"client.reconnect\", \"id\": null}";
 
@@ -22,9 +21,9 @@ public class StratumJsonMethodReconnect extends StratumJsonMethod
         if (s.compareTo("client.reconnect") != 0) {
             throw new MinyaException();
         }
-        JsonNode p=i_json_node.get("params");
-        this.host=p.get(0).asText();
-        this.port=p.get(1).asInt();
+        JsonNode p = i_json_node.get("params");
+        this.host = p.get(0).asText();
+        this.port = p.get(1).asInt();
         return;
     }
 }

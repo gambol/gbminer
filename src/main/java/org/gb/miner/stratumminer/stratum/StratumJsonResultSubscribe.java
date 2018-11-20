@@ -1,8 +1,8 @@
 package org.gb.miner.stratumminer.stratum;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import org.gb.miner.stratumminer.HexArray;
 import org.gb.miner.stratumminer.MinyaException;
-import com.fasterxml.jackson.databind.JsonNode;
 
 /**
  * Created by Ben David on 01/08/2017.
@@ -12,11 +12,12 @@ public class StratumJsonResultSubscribe extends StratumJsonResult {
     public final String session_id;
     public final HexArray xnonce1;
     public final int xnonce2_size;
-    public final static String TEST_PATT ="{\"id\":1,\"result\":[[\"mining.notify\",\"b86c07fd6cc70b367b61669fb5e91bfa\"],\"f8000105\",4],\"error\":null}";
+    public final static String TEST_PATT = "{\"id\":1,\"result\":[[\"mining.notify\",\"b86c07fd6cc70b367b61669fb5e91bfa\"],\"f8000105\",4],\"error\":null}";
+
     public StratumJsonResultSubscribe(JsonNode i_json_node) throws MinyaException {
         super(i_json_node);
         //エラー理由がある場合
-        if(this.error!=null){
+        if (this.error != null) {
             throw new MinyaException(this.error.asText());
         }
         JsonNode n = i_json_node.get("result");
@@ -24,7 +25,7 @@ public class StratumJsonResultSubscribe extends StratumJsonResult {
             throw new MinyaException();
         }
         // sessionID
-        if ((n.get(0).get(0).get(0) != null )) {
+        if ((n.get(0).get(0).get(0) != null)) {
             if (n.get(0).get(0).get(0).asText().compareTo("mining.notify") != 0) {
                 throw new MinyaException();
             }

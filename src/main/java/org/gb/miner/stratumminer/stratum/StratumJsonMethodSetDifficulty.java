@@ -1,14 +1,13 @@
 package org.gb.miner.stratumminer.stratum;
 
-import org.gb.miner.stratumminer.MinyaException;
 import com.fasterxml.jackson.databind.JsonNode;
+import org.gb.miner.stratumminer.MinyaException;
 
 /**
  * Created by Ben David on 01/08/2017.
  */
 
-public class StratumJsonMethodSetDifficulty extends StratumJsonMethod
-{
+public class StratumJsonMethodSetDifficulty extends StratumJsonMethod {
     public final static String TEST_PATT = "{\"params\": [533.210506917676], \"jsonrpc\": \"2.0\", \"method\": \"mining.set_difficulty\", \"id\": 44016281}";
 
     // public parameter
