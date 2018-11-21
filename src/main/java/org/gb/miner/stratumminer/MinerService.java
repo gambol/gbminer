@@ -61,7 +61,7 @@ public class MinerService {
 
         try {
             mc = new StratumMiningConnection(url, user, pass);
-            int nThread = 8;
+            int nThread = 1;
             imw = new CpuMiningWorker(nThread, DEFAULT_RETRYPAUSE, DEFAULT_PRIORITY);
             smc = new SingleMiningChief(mc, imw);
             smc.startMining();

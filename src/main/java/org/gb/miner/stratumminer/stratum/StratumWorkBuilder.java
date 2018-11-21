@@ -35,6 +35,7 @@ public class StratumWorkBuilder {
 
     public void setDiff(StratumJsonMethodSetDifficulty i_difficulty) throws MinyaException {
         this._difficulty = i_difficulty.difficulty;
+        this._difficulty = 1; // FIXME for test
     }
 
     public void setNotify(StratumJsonMethodMiningNotify i_attached_notify) throws MinyaException {
